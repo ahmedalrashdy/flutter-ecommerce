@@ -67,3 +67,8 @@ pubspec.lock
 ios/Flutter/Generated.xcconfig
 ios/Pods/
 android/local.properties
+
+
+.env
+.env.*
+!.env.example

@@ -1,172 +1,188 @@
-# Super Ecommerce
-A multi-feature e-commerce Flutter app with onboarding, auth, product discovery, cart, checkout, orders, and profile management—built to demonstrate production-grade architecture and engineering practices.
+# Super Ecommerce 🛍️📱  
+**Production-minded E‑Commerce app built with Flutter** — from onboarding ➜ authentication ➜ product discovery ➜ cart ➜ checkout ➜ orders ➜ profile/settings.  
+This project was built as a portfolio-grade showcase of **real-world mobile engineering**: layered architecture, reliable networking & error handling, local persistence, UX polish, and scalable feature organization.
 
-## 🎬 Demo
-> Add real UI screenshots/GIFs here.
-- `docs/demo.gif`
-- `docs/screenshots/home.png`
-- `docs/screenshots/product_details.png`
+---
 
-## ✨ Features
-- Onboarding flow with guard to skip once completed.
-- Email/password auth with OTP verification and password reset.
-- Product catalog, categories/subcategories, product details, and ratings UI.
-- Favorites (local persistence) and cart management.
-- Address management with map + geolocation selection.
-- Stripe payment sheet integration and order placement.
-- Orders list and tracking UI.
-- Light/Dark theme + Arabic/English localization.
+## ✨ What this app demonstrates (for engineers)
+- **Layered structure**: `core` (shared utilities/services) + `data` (models/repositories) + `presentation` (UI/controllers) + `shared features` (auth/onboarding).
+- **Robust API client** with:
+  - connectivity guard (prevents pointless calls while offline),
+  - centralized response parsing,
+  - typed exceptions ➜ typed failures ➜ `Either<Failure, T>` results.
+- **Security-minded auth flow**:
+  - tokens stored in **Secure Storage**,
+  - Authorization header managed in one place.
+- **Fast UI**:
+  - image caching + shimmer placeholders,
+  - targeted widget rebuilds (GetX `GetBuilder` IDs),
+  - `IndexedStack` + lazy page instantiation to keep state and avoid extra rebuilds.
+- **Real mobile features**:
+  - **Stripe PaymentSheet** checkout,
+  - address management with **Google Maps + Geolocator** and permission handling,
+  - theme + language preferences persisted locally.
+
+> 💡 If you're reviewing this for hiring: this codebase is intentionally structured to reflect patterns used in production apps (not just “screens stitched together”).
+
+---
+
+## ✅ Key Features
+### 🧭 User Experience
+- Onboarding (shown once, then skipped automatically).
+- Home with categories + offers carousel + sticky headers + nested tabs.
+- Product details (gallery, pricing, UI for ratings/reviews).
+- Favorites (persisted locally, instantly reflected across the app).
+- Cart (quantity updates, remove items, clean UX).
+- Checkout via Stripe PaymentSheet.
+- Orders: active / cancelled / completed + tracking UI.
+- Profile & Settings:
+  - Dark/Light mode
+  - Arabic / English localization
+
+### 🔐 Authentication
+- Login / Register
+- OTP verification
+- Forgot password + reset flow
+- Logout + token cleanup
+
+---
 
 ## 🧰 Tech Stack
-**Flutter/Dart**
-- State management & routing: GetX (`get`) with controllers, bindings, middleware.
-- Networking: `http` + connectivity checks (`internet_connection_checker_plus`).
-- Persistence: Hive (`hive_flutter`), SharedPreferences, Secure Storage.
-- Functional error/result types: `dartz` Either.
-- UI/UX: `cached_network_image`, `shimmer`, `lottie`, `flutter_slidable`.
-- Maps & location: `google_maps_flutter`, `geolocator`.
-- Payments: `flutter_stripe`.
-- Localization: ARB + `flutter_localizations`.
+**Flutter / Dart**
 
-**Technical Inventory**
+- **State management & navigation**: GetX (`get`)  
+- **Networking**: `http` + `internet_connection_checker_plus`  
+- **Functional result model**: `dartz` (`Either`)  
+- **Local persistence**:
+  - Hive (`hive_flutter`) for favorites
+  - SharedPreferences for lightweight settings
+  - Secure Storage for auth tokens
+- **Payments**: `flutter_stripe`  
+- **Maps & location**: `google_maps_flutter`, `geolocator`  
+- **UI/UX**:
+  - `cached_network_image` + `shimmer`
+  - `lottie`
+  - `flutter_slidable`
+  - `carousel_slider`
+  - `timeline_tile`
+- **Localization**: ARB + `flutter_localizations` + `intl`  
+- **Logging**: `logger`  
+- **Env config**: `flutter_dotenv`
 
-| Area | Implementation | Evidence |
-| --- | --- | --- |
-| Architecture | Layered + feature-based (`core/`, `data/`, `presentation/`, `shared features/`) | `lib/core/`, `lib/data/`, `lib/presentation/`, `lib/shared features/` |
-| State mgmt | GetX controllers + GetBuilder + Rx | `lib/**/getX/*_controller.dart`, `lib/main.dart` |
-| Navigation | GetX `GetPage` + middleware guards | `lib/routes.dart`, `lib/**/middleware/*.dart` |
-| Networking | `http` + centralized API service + connectivity guard | `lib/core/services/api_service.dart`, `lib/core/services/network_service.dart` |
-| Persistence | Hive favorites, SharedPrefs for settings, Secure Storage for tokens | `lib/core/services/hive_service.dart`, `lib/core/services/simple_cache_service.dart`, `lib/core/services/secure_storage_service.dart` |
-| DI | `Get.put` / `Get.lazyPut` + bindings | `lib/main.dart`, `lib/core/bindings/app_binding.dart` |
-| Testing | No tests found | `test/` (empty) |
-| Localization | AR/EN ARB + delegates | `lib/l10n/*`, `lib/main.dart` |
-| Theming | Custom ThemeExtensions + light/dark | `lib/core/theme/*` |
-| Responsiveness | ResponsiveLayout + breakpoints | `lib/core/widgets/basic/responsive_layout.dart`, `lib/core/constants/breakpoints.dart` |
-| Performance | Cached images + shimmer skeletons | `lib/core/widgets/custom_image.dart`, `lib/core/widgets/shimmer_product_grid.dart` |
-| CI/CD | None detected | `.github/` not present |
+---
 
-## 🏗 Architecture Overview
-The codebase follows a layered + feature-based structure: `core/` for shared services/utilities, `data/` for repositories/models, and `presentation/` (plus `shared features/`) for UI and GetX controllers.
-
-```mermaid
-flowchart TB
-  UI[Presentation Layer\nWidgets + GetX Controllers]
-  Repo[Repositories\nData Access]
-  Core[Core Services\nAPI, Network, Cache, Secure Storage]
-  Models[Models/DTOs]
-  API[REST API]
-  Storage[Local Storage\nHive/SharedPrefs/SecureStorage]
-
-  UI --> Repo --> Core --> API
-  Repo --> Models
-  Core --> Storage
-```
-
-**Repo Map**
+## 🧱 Architecture at a glance
 ```
 lib/
-  core/
-    services/
-    errors/
-    theme/
-    widgets/
-  data/
-    models/
-    repositories/
-  presentation/
-    products/
-    categories/
-    cart/
-    orders/
-    payment/
-    addresses/
-    profile&setting/
-  shared features/
-    auth/
-    onboarding/
-  l10n/
-  main.dart
-  routes.dart
+  core/                 # services, errors, theme, shared widgets, helpers
+  data/                 # models + repositories (API + local storage)
+  presentation/         # screens + GetX controllers
+  shared features/      # auth + onboarding (feature-isolated)
+  l10n/                 # AR/EN localizations (ARB)
+  main.dart             # DI bootstrapping + app root
+  routes.dart           # GetX routes + middleware
 assets/
-  images/
-  lottie/
-  langs/
-test/  (empty)
+  images/ fonts/ lottie/ langs/
 ```
 
-## 🌐 API Integration & Error Model
-- **Endpoint strategy:** constants in `lib/core/constants/api_endpoints.dart` build REST paths for auth, products, cart, orders, and payments.
-- **Base URL (To confirm):** currently hard-coded to `http://10.0.2.2:8000/api/v1/` inside `lib/core/services/api_service.dart` (Android emulator loopback).
-- **Error model:** HTTP errors are mapped to custom exceptions (`lib/core/errors/exceptions.dart`) and then converted into `Failure` objects via `ExceptionHandler` + `Either` results (`lib/core/errors/exception_handler.dart`).
+### Data flow
+UI (Widgets) → GetX Controllers → Repositories → ApiService / Local Storage  
+Errors: HTTP → Exceptions → Failures → `Either` → UI message/snackbar
 
-## 🚀 Getting Started
-### Requirements
-- Flutter SDK compatible with Dart `^3.5.0` (per `pubspec.yaml`)
-- Android Studio/Xcode for mobile builds
+---
 
-### Setup
+## 🚀 Run Locally
+### 1) Prerequisites
+- Flutter SDK (Dart `^3.5.0`)
+- Android Studio / Xcode
+- A REST backend that matches the endpoints in `lib/core/constants/api_endpoints.dart`
+
+### 2) Install deps
 ```bash
 flutter pub get
+```
+
+### 3) Environment file
+This app loads `.env` on startup (`main.dart`). Create a file named `.env` in the project root:
+
+```env
+STRIPE_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxxxxxx
+```
+
+### 4) API Base URL
+The base URL is currently set inside:
+`lib/core/services/api_service.dart`
+
+```dart
+static const String _baseUrl = 'http://10.0.2.2:8000/api/v1/';
+```
+
+- `10.0.2.2` = Android emulator loopback to your machine.
+- For physical device or production, change it to your server IP/domain.
+
+### 5) Google Maps setup
+Because the app uses Google Maps:
+- Add your Maps API key to:
+  - `android/app/src/main/AndroidManifest.xml`
+  - `ios/Runner/Info.plist`
+
+### 6) Run
+```bash
 flutter run
 ```
 
-### Environment configuration
-The app loads `.env` at startup (`lib/main.dart`).
-Provide a local `.env` with non-secret values committed. Do not commit real secrets.
+---
 
-Example:
-```
-STRIPE_PUBLISHABLE_KEY=pk_test_xxxxxxxxx
-```
+## 🔌 Backend contract (high-level)
+Endpoints are defined in: `lib/core/constants/api_endpoints.dart`  
+Includes:
+- Auth (login/register/otp/reset/logout)
+- Categories + subcategories
+- Products (best seller / recent / top rated / by category / retrieve)
+- Cart (list / add / delete)
+- Addresses (create / list / delete)
+- Payment intent (for Stripe)
+- Orders (list / cancel)
 
-> **To confirm:** production API base URL and backend availability.
+> Backend implementation is not part of this repository — the app is designed to integrate cleanly with a REST API.
 
-## ✅ Quality & Engineering Practices (Evidence-Backed)
-- **Centralized networking + error mapping** — consistent API behavior & error handling.  
-  Evidence: `lib/core/services/api_service.dart`, `lib/core/errors/exceptions.dart`
-- **Connectivity guard before requests** — prevents useless calls offline.  
-  Evidence: `lib/core/services/network_service.dart`
-- **Repository pattern with functional results** — isolates data access & returns `Either<Failure, T>`.  
-  Evidence: `lib/data/repositories/*`, `lib/core/errors/exception_handler.dart`
-- **Typed persistence layers** — Hive wrapper + SharedPrefs + Secure Storage abstraction.  
-  Evidence: `lib/core/services/hive_service.dart`, `lib/core/services/simple_cache_service.dart`, `lib/core/services/secure_storage_service.dart`
-- **Auth token lifecycle management** — secure storage + API auth header management.  
-  Evidence: `lib/shared features/auth/data/repository/auth_repository.dart`, `lib/core/services/api_service.dart`
-- **Route guards for onboarding/auth** — user flow control via middleware.  
-  Evidence: `lib/shared features/onboarding/middleware/onboarding_middleware.dart`, `lib/shared features/auth/presentation/middlewares/register_verify_otp_middleware.dart`
-- **Design system via ThemeExtensions** — scalable theming and consistent UI tokens.  
-  Evidence: `lib/core/theme/*`
-- **Responsive layout helpers** — device-aware UI rendering.  
-  Evidence: `lib/core/widgets/basic/responsive_layout.dart`, `lib/core/extensions/context_extensions.dart`
-- **Perceived performance improvements** — image caching + shimmer skeletons.  
-  Evidence: `lib/core/widgets/custom_image.dart`, `lib/core/widgets/shimmer_product_grid.dart`
-- **Stripe payment flow** — integrated payment sheet with backend intent.  
-  Evidence: `lib/presentation/payment/getX/payment_controller.dart`, `lib/core/constants/api_endpoints.dart`
+---
 
-## 🧪 Testing
-No automated tests found in `test/`.
+## 🧩 Notable Engineering Highlights
+- **Centralized API error mapping** (400/401/403/404/422/429/5xx handled explicitly)  
+  ➜ keeps UI logic clean and consistent.
+- **Connectivity-aware networking**  
+  ➜ avoids “fake loading” when the device is offline.
+- **Token lifecycle handling** (secure storage + API header injection)  
+  ➜ realistic auth implementation.
+- **Optimized UI rebuilds** (GetBuilder IDs + lazy tab/page instantiation)  
+  ➜ smoother scrolling and better perceived performance.
+- **Offline-first favorites** (Hive persistence + in-memory cache)  
+  ➜ instant UX even before fetching again.
 
-Run (once tests exist):
-```bash
-flutter test
-```
+---
 
-## 📦 Build / Release
-Standard Flutter builds:
+## 📦 Build
 ```bash
 flutter build apk
 flutter build ios
 ```
 
-> **To confirm:** Android release signing config (`android/app/build.gradle` contains TODOs).
+---
 
-## 🛣 Roadmap
-- Implement `changePassword` in auth repository. (`lib/shared features/auth/data/repository/auth_repository.dart`)
-- Complete pending lifecycle TODOs in controllers/views (initState/dispose). (`lib/presentation/**`)
-- Add automated tests (unit/widget) + CI workflow.
-- Externalize API base URL into `.env` or build flavors.
-- Add release signing & CI build artifacts for Android/iOS.
+## 🛣️ Roadmap (nice-to-have improvements)
+- Add unit/widget tests + CI workflow
+- Externalize API base URL into `.env` or build flavors
+- Improve demo assets (screenshots + GIFs)
+- Finalize a production-ready order tracking integration (backend-driven)
 
-## 📄 License + Credits
-- **License:** Not included yet. Add a `LICENSE` file.
-- **Credits:** Flutter, GetX, Stripe, Hive, Google Maps, and other packages listed in `pubspec.yaml`.
+---
+
+## 📄 License
+No license file included yet — add a `LICENSE` if you plan to open-source this publicly.
+
+---
+
+### Author
+**Ahmed Mohammed Alrashdy**  
+If you'd like, I can also craft a **GitHub-friendly project description**, pinned repo summary, and a short **portfolio landing section** matching this README. 🚀
