@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_routes.dart';
 import 'package:super_ecommerce/core/controllers/product_card_controller.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/data/models/product_model.dart';
 import '../constants/app_text_style.dart';
 
@@ -47,7 +48,7 @@ class _ProductCardState extends State<ProductCard> {
       child: Card(
         clipBehavior: Clip.antiAlias,
         elevation: 2,
-        color: Colors.white,
+        color: context.lighten(context.colors.surface),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -67,10 +68,8 @@ class _ProductCardState extends State<ProductCard> {
                     children: [
                       Text(
                         widget.product.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
+                        style: context.appTextTheme.bold14
+                            .copyWith(color: context.colors.onSurface),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -90,14 +89,18 @@ class _ProductCardState extends State<ProductCard> {
               left: 8,
               child: GetBuilder<ProductCardController>(
                   id: widget.product.id,
-                  builder: (context) {
+                  builder: (controller) {
                     log("جاري بناء الكارد رقم ${widget.product.id}");
                     return AnimatedSwitcher(
                       duration: const Duration(milliseconds: 300),
                       child: IconButton(
                         icon: widget.product.isFavorite
-                            ? const Icon(Icons.favorite, color: Colors.red)
-                            : const Icon(Icons.favorite_border),
+                            ? Icon(Icons.favorite,
+                                color: context.colors.primary)
+                            : Icon(
+                                Icons.favorite_border,
+                                color: context.colors.onSurface,
+                              ),
                         onPressed: () async {
                           await controller.handleAddToFavorite(widget.product);
                         },
@@ -141,12 +144,13 @@ class _ProductCardState extends State<ProductCard> {
                 vertical: 4,
               ),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: context.colors.primary,
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
                 "${widget.product.discount}% OFF",
-                style: AppTextStyle.semiBold12.copyWith(color: Colors.white),
+                style: context.appTextTheme.semiBold12
+                    .copyWith(color: context.colors.onPrimary),
               ),
             ),
           ),
@@ -167,8 +171,8 @@ class _ProductCardState extends State<ProductCard> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: value == index
-                          ? Colors.pink
-                          : Colors.white.withOpacity(0.5),
+                          ? context.colors.primary
+                          : context.colors.onPrimary,
                     ),
                   ),
                 ),
@@ -184,15 +188,16 @@ class _ProductCardState extends State<ProductCard> {
       children: [
         Text(
           "\$${(widget.product.price * (1 - widget.product.discount / 100)).toStringAsFixed(2)}",
-          style: AppTextStyle.bold16.copyWith(color: Colors.deepOrange),
+          style: context.appTextTheme.bold16
+              .copyWith(color: context.darken(context.colors.primary)),
         ),
-        // const SizedBox(width: 4),
+        const SizedBox(width: 4),
         if (widget.product.discount > 0)
           Text(
             "\$${widget.product.price.toStringAsFixed(2)}",
-            style: const TextStyle(
+            style: TextStyle(
               decoration: TextDecoration.lineThrough,
-              color: Colors.grey,
+              color: context.colors.onSurfaceVariant,
               fontSize: 12,
             ),
           ),

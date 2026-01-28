@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -55,7 +56,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: Text(
               'Save',
               style: TextStyle(
-                color: Theme.of(context).primaryColor,
+                color: context.colors.primary,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -86,11 +87,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: Theme.of(context).primaryColor.withOpacity(0.2),
+                color: context.colors.primary.withOpacity(0.2),
                 width: 2,
               ),
               image: const DecorationImage(
-                image: NetworkImage('https://ui-avatars.com/api/?name=John+Doe&background=random'),
+                image: NetworkImage(
+                    'https://ui-avatars.com/api/?name=John+Doe&background=random'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -101,7 +103,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: context.colors.primary,
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 2),
               ),
@@ -146,7 +148,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your email';
                 }
-                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value)) {
                   return 'Please enter a valid email';
                 }
                 return null;
@@ -198,7 +201,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           validator: validator,
           decoration: InputDecoration(
             prefixIcon: Icon(icon, color: Colors.grey, size: 22),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: Colors.grey.shade300),
@@ -209,7 +213,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+              borderSide: BorderSide(color: context.colors.primary),
             ),
             filled: true,
             fillColor: Colors.grey.shade50,

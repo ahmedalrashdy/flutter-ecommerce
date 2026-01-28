@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:super_ecommerce/core/widgets/custom_%20message.dart';
 import '../../data/models/product_model.dart';
 import 'product_card.dart';
 

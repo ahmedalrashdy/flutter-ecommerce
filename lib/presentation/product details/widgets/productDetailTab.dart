@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:super_ecommerce/core/constants/app_text_style.dart';
 import 'package:super_ecommerce/core/enums/async_status.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/core/widgets/product_sliver_grid.dart';
 import 'package:super_ecommerce/core/widgets/shimmer_product_grid.dart';
 import 'package:super_ecommerce/presentation/product%20details/widgets/product_bottom_nav_bar.dart';
@@ -33,7 +33,7 @@ class ProductDetailTab extends StatelessWidget {
           SliverToBoxAdapter(
             child: Text(
               "منتجات مشابهة",
-              style: AppTextStyle.bold23,
+              style: context.appTextTheme.bold23,
             ),
           ),
           GetBuilder<ProductDetailsController>(

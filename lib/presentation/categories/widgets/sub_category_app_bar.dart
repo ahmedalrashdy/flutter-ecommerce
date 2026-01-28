@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_routes.dart';
 import 'package:super_ecommerce/core/constants/app_text_style.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/data/models/category_model.dart';
 import 'package:super_ecommerce/presentation/categories/getX/sub_category_controller.dart';
 
@@ -23,23 +23,31 @@ class SubCategoryAppBar extends StatelessWidget {
           pinned: true,
           floating: true,
           elevation: 0,
-          backgroundColor: AppTheme.primaryColor,
+          leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(
+                Icons.arrow_back,
+                color: context.colors.onPrimary,
+              )),
+          backgroundColor: context.colors.primary,
           title: AnimatedSwitcher(
             duration: const Duration(milliseconds: 200),
             child: controller.showSearchBar.value
                 ? _buildSearchField()
                 : Text(
                     category.name,
-                    style: AppTextStyle.bold20.copyWith(color: Colors.white),
+                    style: context.appTextTheme.bold20
+                        .copyWith(color: context.colors.onPrimary),
                   ),
           ),
           actions: [
             if (!controller.showSearchBar.value)
               IconButton(
-                  icon: const Icon(Icons.search),
+                  icon: Icon(Icons.search, color: context.colors.onPrimary),
                   onPressed: () => controller.showSearchBar.value = true),
             IconButton(
-              icon: const Icon(Icons.shopping_cart_outlined),
+              icon: Icon(Icons.shopping_cart_outlined,
+                  color: context.colors.onPrimary),
               onPressed: () => Get.toNamed(AppRoute.cartScreen),
             ),
           ],

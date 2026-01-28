@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../constants/app_text_style.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -14,6 +13,9 @@ class CustomButton extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
+    Color secondary = isLoading || onPressed == null
+        ? context.colors.onSurfaceVariant
+        : context.colors.onPrimary;
     return SizedBox(
       width: double.infinity,
       height: 55,
@@ -24,25 +26,24 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
           elevation: 2,
-          backgroundColor: Theme.of(context).primaryColor,
-          foregroundColor: Colors.white,
+          backgroundColor: context.colors.primary,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (isLoading)
-              const SizedBox(
+              SizedBox(
                 height: 24,
                 width: 24,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  valueColor: AlwaysStoppedAnimation<Color>(secondary),
                 ),
               ),
             if (isLoading) const SizedBox(width: 10),
             Text(
               title,
-              style: AppTextStyle.bold16.copyWith(color: Colors.white),
+              style: context.appTextTheme.bold16.copyWith(color: secondary),
             )
           ],
         ),

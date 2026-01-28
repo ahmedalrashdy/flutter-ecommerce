@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/auth_controller.dart';
-import 'login_screen.dart';
+import 'package:super_ecommerce/core/classes/app_validator.dart';
+import 'package:super_ecommerce/core/constants/app_text_style.dart';
+import 'package:super_ecommerce/core/enums/async_status.dart';
+import 'package:super_ecommerce/core/extensions/context_extensions.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
+import 'package:super_ecommerce/core/widgets/custom_button.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/controllers/reset_password_controller.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/screens/login_screen.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/widgets/custom_form_text_field.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/widgets/reset_password_header.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -13,7 +21,6 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final AuthController _authController = Get.find<AuthController>();
 
   @override
   void dispose() {
@@ -21,21 +28,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
+  late ResetPasswordController controller;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = Get.put(ResetPasswordController());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<AuthController>(
-        builder: (controller) {
+      body: GetBuilder<ResetPasswordController>(
+        id: 'sendEmail',
+        builder: (controllder) {
           return Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Theme.of(context).primaryColor.withOpacity(0.1),
-                  Colors.white,
-                ],
-              ),
+              gradient: context.gradients.containerGradient,
             ),
             child: SafeArea(
               child: Center(
@@ -47,97 +56,33 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 20,
-                                offset: const Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.lock_reset_rounded,
-                            size: 64,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
+                        ResetPasswordHeader(
+                            title: context.tr.auth_forgotPasswordTitle,
+                            subTitle:
+                                context.tr.resetPassword_requestInstruction),
                         const SizedBox(height: 32),
-                        Text(
-                          'نسيت كلمة المرور؟',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          'أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        _buildTextField(
+                        CustomFormTextField(
                           controller: _emailController,
                           icon: Icons.email_outlined,
-                          label: 'البريد الإلكتروني',
+                          label: context.tr.common_emailLabel,
                           keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'الرجاء إدخال البريد الإلكتروني';
-                            }
-                            if (!GetUtils.isEmail(value)) {
-                              return 'الرجاء إدخال بريد إلكتروني صحيح';
-                            }
-                            return null;
-                          },
+                          validator: AppValidator.isEmail,
                         ),
                         const SizedBox(height: 24),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: controller.isLoading
-                                ? null
-                                : () {
-                                    if (_formKey.currentState!.validate()) {
-                                      // TODO: Implement forgot password
-                                      _authController.forgotPassword(_emailController.text);
-                                    }
-                                  },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              foregroundColor: Colors.white,
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: controller.isLoading
-                                ? const CircularProgressIndicator(color: Colors.white)
-                                : const Text(
-                                    'إرسال رابط إعادة التعيين',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                          ),
+                        CustomButton(
+                          title: context.tr.common_next,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              controller
+                                  .resetPasswordRequest(_emailController.text);
+                            }
+                          },
+                          isLoading: controllder.sendEmailStatus ==
+                              AsyncStatus.loading,
                         ),
                         const SizedBox(height: 24),
                         TextButton(
-                          onPressed: () => Get.off(
-                            () => const LoginScreen(),
-                            transition: Transition.leftToRight,
-                          ),
+                          onPressed: () => Get.back(),
                           style: TextButton.styleFrom(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 16,
@@ -151,16 +96,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               Icon(
                                 Icons.arrow_back_ios,
                                 size: 16,
-                                color: Theme.of(context).primaryColor,
+                                color: context.colors.primary,
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                'العودة لتسجيل الدخول',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                context.tr.resetPassword_backToLoginLink,
+                                style: context.appTextTheme.regular16
+                                    .copyWith(color: context.colors.primary),
                               ),
                             ],
                           ),
@@ -173,69 +115,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required IconData icon,
-    required String label,
-    String? Function(String?)? validator,
-    TextInputType? keyboardType,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        validator: validator,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: Icon(icon),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Colors.grey.withOpacity(0.3),
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Colors.grey.withOpacity(0.3),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.error,
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.error,
-            ),
-          ),
-          filled: true,
-          fillColor: Colors.white,
-        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/presentation/profile&setting/getX/setting_controller.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
@@ -30,9 +31,9 @@ class LanguageBottomSheet extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Text(
               'Select Language',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: context.textStyleTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const Divider(height: 1),
@@ -69,7 +70,7 @@ class LanguageBottomSheet extends StatelessWidget {
                                       ? FontWeight.w600
                                       : FontWeight.normal,
                                   color: isSelected
-                                      ? Theme.of(context).primaryColor
+                                      ? context.colors.primary
                                       : Colors.black87,
                                 ),
                               ),
@@ -77,7 +78,7 @@ class LanguageBottomSheet extends StatelessWidget {
                             if (isSelected)
                               Icon(
                                 Icons.check,
-                                color: Theme.of(context).primaryColor,
+                                color: context.colors.primary,
                               ),
                           ],
                         ),

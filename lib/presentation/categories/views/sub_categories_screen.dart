@@ -42,7 +42,6 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen>
     SubCategoryController controller =
         Get.put(SubCategoryController(), tag: "subCategory_${categoryId}");
     return Scaffold(
-        backgroundColor: Colors.grey[50],
         body: NestedScrollView(
             controller: controller.scrollController,
             headerSliverBuilder: (context, innerBoxIsScrolled) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/app_theme_current.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/data/models/order_model.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
@@ -17,7 +18,7 @@ class TrackOrderScreen extends StatelessWidget {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: AppTheme.primaryColor,
+        backgroundColor: context.colors.primary,
         title: const Text(
           'Track Order',
           style: TextStyle(
@@ -236,7 +237,7 @@ class TrackOrderScreen extends StatelessWidget {
               Text(
                 '3/5 Steps',
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: context.colors.primary,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -255,7 +256,7 @@ class TrackOrderScreen extends StatelessWidget {
                 isLast: index == steps.length - 1,
                 beforeLineStyle: LineStyle(
                   color: step['isCompleted']
-                      ? Theme.of(context).primaryColor
+                      ? context.colors.primary
                       : Colors.grey[300]!,
                 ),
                 indicatorStyle: IndicatorStyle(
@@ -264,12 +265,12 @@ class TrackOrderScreen extends StatelessWidget {
                   indicator: Container(
                     decoration: BoxDecoration(
                       color: step['isCompleted']
-                          ? Theme.of(context).primaryColor
+                          ? context.colors.primary
                           : Colors.white,
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: step['isCompleted']
-                            ? Theme.of(context).primaryColor
+                            ? context.colors.primary
                             : Colors.grey[300]!,
                         width: 2,
                       ),
@@ -541,7 +542,7 @@ class TrackOrderScreen extends StatelessWidget {
               icon: const Icon(Icons.headset_mic_outlined),
               label: const Text('Contact Support'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor: context.colors.primary,
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

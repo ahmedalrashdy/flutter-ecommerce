@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:super_ecommerce/core/extensions/context_extensions.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/screens/verify_otp_screen.dart';
 import '../../../../core/classes/app_validator.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/enums/async_status.dart';
@@ -23,21 +25,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    LoginController controller = Get.put(LoginController());
+    Get.put(LoginController());
     return Scaffold(
       body: GetBuilder<LoginController>(builder: (controller) {
         return Container(
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Theme.of(context).primaryColor.withOpacity(0.1),
-                Colors.white,
-                Theme.of(context).primaryColor.withOpacity(0.05),
-              ],
-            ),
+            gradient: context.gradients.containerGradient,
           ),
           child: SafeArea(
             child: SingleChildScrollView(
@@ -50,8 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 40),
-                        const AuthHeader(
-                          title: 'تسجيل الدخول',
+                        AuthHeader(
+                          title: context.tr.login_title,
                           description: 'أهلاً بك مجدداً! سجل الدخول الآن',
                           assetPath: AppAssets.imagesLogo,
                           heroTag: 'logo',
@@ -60,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomFormTextField(
                           controller: controller.emailController,
                           icon: Icons.email_outlined,
-                          label: 'البريد الإلكتروني',
+                          label: context.tr.common_emailLabel,
                           keyboardType: TextInputType.emailAddress,
                           validator: AppValidator.isEmail,
                         ),
@@ -68,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomFormTextField(
                           controller: controller.passwordController,
                           icon: Icons.lock_outline,
-                          label: 'كلمة المرور',
+                          label: context.tr.common_passwordLabel,
                           obscureText: controller.obscurePassword,
                           hasPasswordToggle: true,
                           onTogglePassword: () {
@@ -83,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ForgotPassword(),
                         ),
                         CustomButton(
-                          title: "تسجيل الدخول",
+                          title: context.tr.login_loginButton,
                           isLoading: controller.status == AsyncStatus.loading,
                           onPressed: controller.login,
                         ),
@@ -91,6 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         const LoginSocialSection(),
                         const SizedBox(height: 24),
                         LoginRegisterPrompt(
+                          promptText: context.tr.login_noAccountPrompt,
+                          actionText: context.tr.login_signupLink,
                           onActionPressed: () => Get.off(
                             () => const RegisterScreen(),
                             transition: Transition.rightToLeft,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class CustomImage extends StatelessWidget {
   final String? imageUrl;
@@ -25,7 +26,7 @@ class CustomImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageUrl == null || imageUrl!.isEmpty) {
-      return _buildErrorWidget();
+      return _buildErrorWidget(context);
     }
 
     return CachedNetworkImage(
@@ -33,12 +34,12 @@ class CustomImage extends StatelessWidget {
       width: width,
       height: height,
       fit: fit,
-      placeholder: (context, url) => _buildShimmerEffect(),
-      errorWidget: (context, url, error) => _buildErrorWidget(),
+      placeholder: (context, url) => _buildShimmerEffect(context),
+      errorWidget: (context, url, error) => _buildErrorWidget(context),
     );
   }
 
-  Widget _buildShimmerEffect() {
+  Widget _buildShimmerEffect(BuildContext context) {
     return SizedBox(
       width: width,
       height: height,
@@ -46,21 +47,21 @@ class CustomImage extends StatelessWidget {
         baseColor: shimmerBaseColor,
         highlightColor: shimmerHighlightColor,
         child: Container(
-          color: Colors.white,
+          color: context.colors.surface,
         ),
       ),
     );
   }
 
-  Widget _buildErrorWidget() {
+  Widget _buildErrorWidget(BuildContext context) {
     return errorWidget ??
         Container(
           width: width,
           height: height,
           color: Colors.grey[300],
-          child: const Icon(
+          child: Icon(
             Icons.error_outline,
-            color: Colors.red,
+            color: context.colors.error,
           ),
         );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_text_style.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/presentation/product%20details/getX/product_detail_controller.dart';
 import '../../../core/widgets/ExpandedText.dart';
 import 'product_price.dart';
@@ -18,10 +19,10 @@ class ProductInfo extends StatelessWidget {
       children: [
         Text(
           controller.productDetail!.product.name,
-          style: AppTextStyle.bold23,
+          style: context.appTextTheme.bold23,
         ),
         Text("الملابس الرجاليه",
-            style: AppTextStyle.bold16.copyWith(color: Colors.grey)),
+            style: context.appTextTheme.bold16.copyWith(color: Colors.grey)),
         ProductPrice(
           discount: controller.productDetail!.product.price,
           price: controller.productDetail!.product.discount,
@@ -48,7 +49,7 @@ class ProductInfo extends StatelessWidget {
                 height: 30,
                 child: Text(
                   "${controller.productDetail!.product.rating}",
-                  style: AppTextStyle.bold16,
+                  style: context.appTextTheme.bold16,
                 ),
               ),
               const SizedBox(
@@ -56,7 +57,8 @@ class ProductInfo extends StatelessWidget {
               ),
               Text(
                 "(${controller.productDetail!.rating.totalRatings} مراجعة)",
-                style: AppTextStyle.bold12.copyWith(color: Colors.black54),
+                style:
+                    context.appTextTheme.bold12.copyWith(color: Colors.black54),
               ),
             ],
           ),
@@ -64,7 +66,7 @@ class ProductInfo extends StatelessWidget {
         const SizedBox(height: 16),
         ExpandedText(
           text: controller.productDetail!.product.description ?? "",
-          style: AppTextStyle.bold16.copyWith(color: Colors.grey[800]),
+          style: context.appTextTheme.bold16.copyWith(color: Colors.grey[800]),
           maxLines: 3,
         )
       ],

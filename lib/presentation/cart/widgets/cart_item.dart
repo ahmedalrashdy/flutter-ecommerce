@@ -3,12 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/enums/async_status.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/data/models/cart_item_model.dart';
 import 'package:super_ecommerce/presentation/cart/getX/cart_controller.dart';
 
 import '../../../core/constants/app_text_style.dart';
 import '../../../core/functions/format_price.dart';
-import '../../../core/theme/app_theme.dart';
+import '../../../core/theme/app_theme_current.dart';
 
 class StatusWrapper {
   AsyncStatus status = AsyncStatus.idle;
@@ -40,8 +41,8 @@ class CartItem extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: status.isSelected
-                    ? AppTheme.primaryColor.withOpacity(.3)
-                    : Colors.white,
+                    ? context.colors.primary.withOpacity(.3)
+                    : context.lighten(context.colors.surface),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -58,6 +59,7 @@ class CartItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Stack(
+                        clipBehavior: Clip.none,
                         children: [
                           Container(
                             width: 110,
@@ -102,7 +104,7 @@ class CartItem extends StatelessWidget {
                                                 width: 20,
                                                 child:
                                                     CircularProgressIndicator(
-                                                  color: AppTheme.primaryColor,
+                                                  color: context.colors.primary,
                                                 ))
                                             : Icon(
                                                 Icons.close,
@@ -124,7 +126,7 @@ class CartItem extends StatelessWidget {
                           children: [
                             Text(
                               cartItem.name,
-                              style: AppTextStyle.bold18.copyWith(
+                              style: context.appTextTheme.bold18.copyWith(
                                 height: 1.2,
                               ),
                             ),
@@ -133,8 +135,8 @@ class CartItem extends StatelessWidget {
                               cartItem.description,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTextStyle.regular14.copyWith(
-                                color: Colors.grey.shade600,
+                              style: context.appTextTheme.regular14.copyWith(
+                                color: context.colors.onSurfaceVariant,
                                 height: 1.3,
                               ),
                             ),
@@ -144,13 +146,15 @@ class CartItem extends StatelessWidget {
                                 Icon(
                                   Icons.local_shipping_outlined,
                                   size: 18,
-                                  color: AppTheme.deepPrimaryColor,
+                                  color: context.darken(context.colors.primary),
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
                                   'توصيل مجاني',
-                                  style: AppTextStyle.regular13.copyWith(
-                                    color: AppTheme.deepPrimaryColor,
+                                  style:
+                                      context.appTextTheme.regular13.copyWith(
+                                    color:
+                                        context.darken(context.colors.primary),
                                   ),
                                 ),
                               ],
@@ -172,15 +176,15 @@ class CartItem extends StatelessWidget {
                             children: [
                               Text(
                                 '\$$newPrice',
-                                style: AppTextStyle.bold20.copyWith(
-                                  color: AppTheme.deepPrimaryColor,
+                                style: context.appTextTheme.bold20.copyWith(
+                                  color: context.darken(context.colors.primary),
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Text(
                                 '\$$oldPrice',
-                                style: AppTextStyle.regular14.copyWith(
-                                  color: Colors.grey,
+                                style: context.appTextTheme.regular14.copyWith(
+                                  color: context.colors.onSurfaceVariant,
                                   decoration: TextDecoration.lineThrough,
                                 ),
                               ),
@@ -188,8 +192,8 @@ class CartItem extends StatelessWidget {
                           ),
                           Text(
                             'خصم ${discountRate}%',
-                            style: AppTextStyle.regular13.copyWith(
-                              color: Colors.green,
+                            style: context.appTextTheme.regular13.copyWith(
+                              color: context.colors.secondary,
                             ),
                           ),
                         ],
@@ -197,16 +201,17 @@ class CartItem extends StatelessWidget {
                       // Quantity Controls
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade50,
+                          color: context.colors.surface.withOpacity(.6),
                           borderRadius: BorderRadius.circular(25),
                           border: Border.all(
-                            color: Colors.grey.shade200,
+                            color: context.colors.onSurfaceVariant,
                             width: 1,
                           ),
                         ),
                         child: Row(
                           children: [
                             _buildQuantityButton(
+                              context: context,
                               icon: Icons.remove,
                               onPressed: () {},
                             ),
@@ -219,10 +224,13 @@ class CartItem extends StatelessWidget {
                               ),
                               child: Text(
                                 "${cartItem.quantity}",
-                                style: AppTextStyle.bold16,
+                                style: context.appTextTheme.bold16.copyWith(
+                                    color:
+                                        context.darken(context.colors.primary)),
                               ),
                             ),
                             _buildQuantityButton(
+                              context: context,
                               icon: Icons.add,
                               onPressed: () {},
                             ),
@@ -239,6 +247,7 @@ class CartItem extends StatelessWidget {
   }
 
   Widget _buildQuantityButton({
+    required BuildContext context,
     required IconData icon,
     required VoidCallback onPressed,
   }) {
@@ -250,22 +259,18 @@ class CartItem extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: AppTheme.primaryColor,
+            color: context.darken(context.colors.primary),
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: AppTheme.deepPrimaryColor.withOpacity(0.2),
+                color: context.darken(context.colors.primary).withOpacity(0.2),
                 spreadRadius: 1,
                 blurRadius: 4,
                 offset: const Offset(0, 1),
               ),
             ],
           ),
-          child: Icon(
-            icon,
-            size: 18,
-            color: Colors.white,
-          ),
+          child: Icon(icon, size: 18, color: context.colors.onSurface),
         ),
       ),
     );

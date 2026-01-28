@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/dialogs/custom_confirm_dialog.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/presentation/addresses/getX/address_screen_controller.dart';
 import '../../../data/models/address_model.dart';
-import '../../../core/theme/app_theme.dart';
 
 class AddressListTile extends StatelessWidget {
   final AddressModel address;
@@ -27,7 +27,7 @@ class AddressListTile extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.location_on,
-                      color: AppTheme.primaryColor,
+                      color: context.colors.primary,
                       size: 32.0,
                     ),
                     const SizedBox(width: 16.0),
@@ -37,27 +37,18 @@ class AddressListTile extends StatelessWidget {
                         children: [
                           Text(
                             address.address,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0,
-                              color: AppTheme.textColor,
-                            ),
+                            style: context.appTextTheme.bold18
+                                .copyWith(color: context.colors.onSurface),
                           ),
                           const SizedBox(height: 8.0),
-                          Text(
-                            address.city,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: AppTheme.greyTextColor,
-                            ),
-                          ),
+                          Text(address.city,
+                              style: context.appTextTheme.regular16.copyWith(
+                                  color: context.colors.onSurfaceVariant)),
                           const SizedBox(height: 4.0),
                           Text(
                             'الاحداثيات: ${address.lat.toStringAsFixed(4)}, ${address.lang.toStringAsFixed(4)}',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: AppTheme.seconderTextColor,
-                            ),
+                            style: context.appTextTheme.regular12.copyWith(
+                                color: context.colors.onSurfaceVariant),
                           ),
                         ],
                       ),
@@ -69,17 +60,12 @@ class AddressListTile extends StatelessWidget {
                           vertical: 6.0,
                         ),
                         decoration: BoxDecoration(
-                          color: AppTheme.accentColor.withOpacity(0.2),
+                          color: context.colors.secondary.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20.0),
                         ),
-                        child: Text(
-                          'الافتراضي',
-                          style: TextStyle(
-                            color: AppTheme.accentColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                          ),
-                        ),
+                        child: Text('الافتراضي',
+                            style: context.appTextTheme.bold14
+                                .copyWith(color: context.colors.secondary)),
                       ),
                   ],
                 ))),

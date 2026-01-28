@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:super_ecommerce/core/widgets/bottom_nav_bar.dart';
 import 'package:super_ecommerce/core/widgets/custom_app_bar.dart';
-import 'package:super_ecommerce/core/widgets/tab_content.dart';
+import 'package:super_ecommerce/core/widgets/basic/tab_content.dart';
 import 'package:super_ecommerce/presentation/products/views/category_section_view.dart';
 
 import '../../../data/models/product_model.dart';

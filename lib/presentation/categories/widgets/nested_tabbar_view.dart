@@ -8,7 +8,7 @@ import 'package:super_ecommerce/data/models/product_model.dart';
 import 'package:super_ecommerce/presentation/categories/getX/sub_category_controller.dart';
 import '../../../core/enums/product_type.dart';
 import '../../../core/widgets/product_sliver_grid.dart';
-import '../../../core/widgets/tab_content.dart';
+import '../../../core/widgets/basic/tab_content.dart';
 
 class NestedTabbarView extends StatelessWidget {
   const NestedTabbarView({

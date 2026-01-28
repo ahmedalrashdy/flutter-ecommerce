@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:super_ecommerce/shared%20features/auth/data/auth_controller.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/controllers/auth_controller.dart';
 
 class UserHeader extends StatelessWidget {
   const UserHeader({super.key});
@@ -18,7 +19,7 @@ class UserHeader extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: Theme.of(context).primaryColor.withOpacity(0.2),
+                color: context.colors.primary.withOpacity(0.2),
                 width: 2,
               ),
               image: const DecorationImage(
@@ -55,7 +56,7 @@ class UserHeader extends StatelessWidget {
             onPressed: () {},
             icon: Icon(
               Icons.edit_outlined,
-              color: Theme.of(context).primaryColor,
+              color: context.colors.primary,
               size: 24,
             ),
           ),

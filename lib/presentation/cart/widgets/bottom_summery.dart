@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_routes.dart';
 import 'package:super_ecommerce/core/functions/format_price.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/presentation/cart/getX/cart_controller.dart';
-import '../../../core/constants/app_text_style.dart';
-import '../../../core/theme/app_theme.dart';
 
 class BottomSummery extends StatelessWidget {
   const BottomSummery({super.key});
@@ -17,14 +16,13 @@ class BottomSummery extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.lighten(context.colors.surface),
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(24),
         ),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
             blurRadius: 8,
             offset: const Offset(0, -2),
           ),
@@ -36,16 +34,18 @@ class BottomSummery extends StatelessWidget {
           _buildSummaryRow(
             title: 'المجموع الفرعي:',
             value: '\$$total',
-            titleStyle: AppTextStyle.regular16,
-            valueStyle: AppTextStyle.bold16,
+            titleStyle: context.appTextTheme.regular16
+                .copyWith(color: context.colors.onSurface),
+            valueStyle: context.appTextTheme.bold16
+                .copyWith(color: context.darken(context.colors.primary)),
           ),
           const SizedBox(height: 12),
           _buildSummaryRow(
             title: 'الشحن:',
             value: 'مجاني',
-            titleStyle: AppTextStyle.regular16,
-            valueStyle: AppTextStyle.bold16.copyWith(
-              color: Colors.green,
+            titleStyle: context.appTextTheme.regular16,
+            valueStyle: context.appTextTheme.bold16.copyWith(
+              color: context.colors.secondary,
             ),
           ),
           Padding(
@@ -58,9 +58,9 @@ class BottomSummery extends StatelessWidget {
           _buildSummaryRow(
             title: 'المجموع الكلي:',
             value: '\$$total',
-            titleStyle: AppTextStyle.bold23,
-            valueStyle: AppTextStyle.bold23.copyWith(
-              color: AppTheme.deepPrimaryColor,
+            titleStyle: context.appTextTheme.bold23,
+            valueStyle: context.appTextTheme.bold23.copyWith(
+              color: context.darken(context.colors.primary),
             ),
           ),
           const SizedBox(height: 20),
@@ -72,17 +72,17 @@ class BottomSummery extends StatelessWidget {
                 Get.toNamed(AppRoute.paymentScreen);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.primaryColor,
+                backgroundColor: context.colors.primary,
                 foregroundColor: Colors.white,
                 elevation: 2,
-                shadowColor: AppTheme.primaryColor.withOpacity(0.3),
+                shadowColor: context.colors.primary.withOpacity(0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
               child: Text(
                 'متابعة الدفع',
-                style: AppTextStyle.bold18.copyWith(
+                style: context.appTextTheme.bold18.copyWith(
                   color: Colors.white,
                 ),
               ),

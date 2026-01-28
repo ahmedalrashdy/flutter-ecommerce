@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_text_style.dart';
-import 'package:super_ecommerce/shared%20features/auth/data/auth_controller.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/controllers/auth_controller.dart';
+import 'package:super_ecommerce/core/theme/app_theme_current.dart';
 import 'package:super_ecommerce/core/widgets/custom_button.dart';
 import 'package:super_ecommerce/presentation/profile&setting/getX/setting_controller.dart';
 import 'package:super_ecommerce/presentation/profile&setting/widgets/settings/setting_item.dart';
@@ -48,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
                         value: enabled,
                         onChanged: (value) =>
                             settingController.toggleNotifications(),
-                        activeColor: Theme.of(context).primaryColor,
+                        activeColor: context.colors.primary,
                       ),
                     );
                   },
@@ -73,13 +74,13 @@ class SettingsScreen extends StatelessWidget {
                           children: [
                             Text(
                               currentLanguage,
-                              style: AppTextStyle.regular16,
+                              style: context.appTextTheme.regular16,
                             ),
                             const SizedBox(width: 4),
                             Icon(
                               Icons.arrow_forward_ios,
                               size: 16,
-                              color: AppTheme.primaryTextColor,
+                              color: context.colors.onPrimary,
                             ),
                           ],
                         ),
@@ -97,13 +98,9 @@ class SettingsScreen extends StatelessWidget {
                       trailing: Switch.adaptive(
                         value: darkMode,
                         onChanged: (value) {
-                          Get.dialog(CustomConfirmationDialog(
-                              title: "قيد العمل",
-                              content: "لم يتم  اكمال العمل على هذا الجزء بعد",
-                              onConfirm: () {}));
                           settingController.toggleDarkMode();
                         },
-                        activeColor: Theme.of(context).primaryColor,
+                        activeColor: context.colors.primary,
                       ),
                     );
                   },
@@ -130,7 +127,7 @@ class SettingsScreen extends StatelessWidget {
                         value: enabled,
                         onChanged: (value) =>
                             settingController.toggleLocation(),
-                        activeColor: Theme.of(context).primaryColor,
+                        activeColor: context.colors.primary,
                       ),
                     );
                   },
@@ -187,7 +184,7 @@ class SettingsScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: Theme.of(context).primaryColor,
+              color: context.colors.primary,
               letterSpacing: 1.2,
             ),
           ),

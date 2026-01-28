@@ -4,5 +4,5 @@ abstract class SharedPreferencesConstants {
   static const user = "user";
   static const theme = "theme";
   static const lang = "lang";
-  static const registerToken = "register_token";
+  static const registerEmail = "register_email";
 }

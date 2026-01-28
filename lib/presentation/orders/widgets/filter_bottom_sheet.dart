@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 void showSortDialog(BuildContext context) {
   showModalBottomSheet(
@@ -45,7 +46,7 @@ Widget _buildSortOption(BuildContext context, String title) {
         children: [
           Icon(
             Icons.check,
-            color: Theme.of(context).primaryColor,
+            color: context.colors.primary,
             size: 20,
           ),
           const SizedBox(width: 12),

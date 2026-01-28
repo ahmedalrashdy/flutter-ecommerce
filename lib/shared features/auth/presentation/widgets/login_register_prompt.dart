@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../core/constants/app_text_style.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class LoginRegisterPrompt extends StatelessWidget {
   final String promptText;
@@ -24,7 +23,7 @@ class LoginRegisterPrompt extends StatelessWidget {
           Text(
             promptText,
             style: TextStyle(
-              color: Colors.grey[600],
+              color: context.colors.onSurface,
               fontSize: 16,
             ),
           ),
@@ -35,9 +34,9 @@ class LoginRegisterPrompt extends StatelessWidget {
             ),
             child: Text(
               actionText,
-              style: AppTextStyle.regular16.copyWith(
+              style: context.appTextTheme.regular16.copyWith(
                 decoration: TextDecoration.underline,
-                color: Theme.of(context).primaryColor,
+                color: context.darken(context.colors.primary),
               ),
             ),
           ),

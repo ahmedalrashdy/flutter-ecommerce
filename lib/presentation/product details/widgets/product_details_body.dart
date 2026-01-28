@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/widgets/sliver_sticky_header.dart';
-import 'package:super_ecommerce/core/widgets/tab_content.dart';
+import 'package:super_ecommerce/core/widgets/basic/tab_content.dart';
 import 'package:super_ecommerce/presentation/product%20details/getX/product_detail_controller.dart';
 import 'productDetailTab.dart';
 import 'product_sliver_app_bar.dart';

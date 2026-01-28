@@ -14,13 +14,16 @@ mixin ExceptionHandler {
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message, statusCode: e.statusCode));
     } on ValidationException catch (e) {
-      return Left(ValidationFailure(messages: e.messages));
+      return Left(ValidationFailure(
+          messages: e.validationMessages, message: e.message));
     } on AuthException catch (e) {
       return Left(AuthFailure(message: e.message));
     } on ConnectionException catch (e) {
       return Left(ConnectionFailure(message: e.message));
     } on UnauthorizedException catch (e) {
       return Left(UnauthorizedFailure(message: e.message));
+    } on TooManyRequestException catch (e) {
+      return Left(TooManyRequestFailure(messages: e.messages));
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     } on CustomException catch (e) {
@@ -43,17 +46,27 @@ mixin ExceptionHandler {
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message, statusCode: e.statusCode));
     } on ValidationException catch (e) {
-      return Left(ValidationFailure(messages: e.messages));
+      return Left(ValidationFailure(messages: e.validationMessages));
     } on AuthException catch (e) {
       return Left(AuthFailure(message: e.message));
     } on ConnectionException catch (e) {
       return Left(ConnectionFailure(message: e.message));
     } on UnauthorizedException catch (e) {
       return Left(UnauthorizedFailure(message: e.message));
+    } on TooManyRequestException catch (e) {
+      return Left(TooManyRequestFailure(messages: e.messages));
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     } on CustomException catch (e) {
       return Left(CustomFailure(message: e.message));
+    } on UnhandledException catch (e, stackTrace) {
+      final className = runtimeType.toString();
+      logger.e(
+        'Unhandled Exception [$className][$e]. Response=>${e.response}',
+        error: e,
+        stackTrace: stackTrace,
+      );
+      return const Left(CustomFailure(message: "حطأ غير معروف"));
     } catch (e, stackTrace) {
       final className = runtimeType.toString();
       logger.e(

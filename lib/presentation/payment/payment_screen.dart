@@ -4,7 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_text_style.dart';
 import 'package:super_ecommerce/core/enums/async_status.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/app_theme_current.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/presentation/addresses/getX/address_screen_controller.dart';
 import 'package:super_ecommerce/presentation/addresses/widgets/address_list.dart';
 import 'package:super_ecommerce/presentation/payment/getX/payment_controller.dart';
@@ -21,10 +22,10 @@ class PaymentScreen extends StatelessWidget {
       builder: (controller) => Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: AppTheme.primaryColor,
+          backgroundColor: context.colors.primary,
           title: Text(
             "حدد عنوان الاستلام",
-            style: AppTextStyle.bold16.copyWith(color: Colors.white),
+            style: context.appTextTheme.bold16.copyWith(color: Colors.white),
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
@@ -33,7 +34,7 @@ class PaymentScreen extends StatelessWidget {
                 : controller.createPaymentIntent,
             backgroundColor: controller.selectedAddressId == null
                 ? Colors.grey
-                : AppTheme.primaryColor,
+                : context.colors.primary,
             label: Row(
               children: [
                 Text("checkout"),
@@ -64,7 +65,7 @@ class PaymentScreen extends StatelessWidget {
                       return Card(
                         color: controller.selectedAddressId ==
                                 controller.addresses[index].id
-                            ? AppTheme.primaryColor
+                            ? context.colors.primary
                             : null,
                         clipBehavior: Clip.antiAlias,
                         child: InkWell(
@@ -76,29 +77,29 @@ class PaymentScreen extends StatelessWidget {
                               color: controller.selectedAddressId ==
                                       controller.addresses[index].id
                                   ? Colors.white
-                                  : AppTheme.primaryColor,
+                                  : context.colors.primary,
                             ),
                             title: Text(
                               "${controller.addresses[index].address}",
-                              style: AppTextStyle.bold16.copyWith(
+                              style: context.appTextTheme.bold16.copyWith(
                                   color: controller.selectedAddressId ==
                                           controller.addresses[index].id
                                       ? Colors.white
-                                      : AppTheme.primaryColor),
+                                      : context.colors.primary),
                             ),
                             subtitle: Text(
                               "${controller.addresses[index].city}",
-                              style: AppTextStyle.bold12.copyWith(
+                              style: context.appTextTheme.bold12.copyWith(
                                   color: controller.selectedAddressId ==
                                           controller.addresses[index].id
                                       ? Colors.white
-                                      : AppTheme.primaryColor),
+                                      : context.colors.primary),
                             ),
                             trailing: Checkbox(
                                 value: controller.selectedAddressId ==
                                     controller.addresses[index].id,
                                 activeColor: Colors.white,
-                                checkColor: AppTheme.primaryColor,
+                                checkColor: context.colors.primary,
                                 onChanged: (value) {
                                   controller.selectAddress(
                                       controller.addresses[index]);

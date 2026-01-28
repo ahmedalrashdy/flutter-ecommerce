@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/enums/async_status.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/core/widgets/custom_button.dart';
 import 'package:super_ecommerce/data/models/order_model.dart';
 import 'package:super_ecommerce/presentation/orders/getX/orders_controller.dart';
@@ -37,7 +38,7 @@ class OrderCardFooter extends StatelessWidget {
               Text(
                 '\$${order.totalAmount.toStringAsFixed(2)}',
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: context.colors.primary,
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),
@@ -61,9 +62,9 @@ class OrderCardFooter extends StatelessWidget {
                     icon: const Icon(Icons.location_on_outlined),
                     label: const Text('Track Order'),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Theme.of(context).primaryColor,
+                      foregroundColor: context.colors.primary,
                       side: BorderSide(
-                        color: Theme.of(context).primaryColor,
+                        color: context.colors.primary,
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(

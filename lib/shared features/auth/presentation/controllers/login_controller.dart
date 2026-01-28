@@ -1,13 +1,11 @@
-import 'dart:developer';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/functions/perform_async_operation.dart';
 import '../../../../core/constants/app_routes.dart';
-import '../../data/auth_controller.dart';
+import 'auth_controller.dart';
 import '../../../../core/dialogs/app_message.dart';
 import '../../../../core/enums/async_status.dart';
 import '../../../../core/errors/failures.dart';
-import '../../data/models/auth_model.dart';
 import '../../data/repository/auth_repository.dart';
 
 class LoginController extends GetxController
@@ -35,11 +33,11 @@ class LoginController extends GetxController
   }
 
   @override
-  void dispose() {
+  void onClose() {
     emailController.dispose();
     passwordController.dispose();
     animationController.dispose();
-    super.dispose();
+    super.onClose();
   }
 
   AsyncStatus status = AsyncStatus.idle;

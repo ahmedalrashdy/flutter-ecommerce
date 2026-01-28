@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:super_ecommerce/core/constants/app_text_style.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/app_theme_current.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/data/models/category_model.dart';
 
 import '../../../core/widgets/custom_image.dart';
@@ -21,28 +22,19 @@ class CategoryCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.colors.onPrimary,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.15),
-              spreadRadius: 2,
-              blurRadius: 8,
-              offset: const Offset(0, 3),
-            ),
-          ],
+          boxShadow: [context.shadows.medium],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Stack(
             children: [
-              // Background Image
               Positioned.fill(
                 child: CustomImage(
                   imageUrl: category.image,
                 ),
               ),
-              // Gradient Overlay
               Positioned.fill(
                 child: Container(
                   decoration: BoxDecoration(
@@ -68,21 +60,21 @@ class CategoryCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(category.name,
-                          style: AppTextStyle.bold18
-                              .copyWith(color: Colors.white)),
+                          style: context.appTextTheme.bold18
+                              .copyWith(color: context.colors.onSurface)),
                       const SizedBox(height: 4),
                       Row(
                         children: [
                           Icon(
                             Icons.shop_outlined,
                             size: 16,
-                            color: Colors.white.withOpacity(0.8),
+                            color: context.colors.onSurfaceVariant,
                           ),
                           const SizedBox(width: 4),
                           Text(
                             'View All',
-                            style: AppTextStyle.regular12
-                                .copyWith(color: Colors.white.withOpacity(0.8)),
+                            style: context.appTextTheme.regular12.copyWith(
+                                color: context.colors.onSurfaceVariant),
                           ),
                         ],
                       ),

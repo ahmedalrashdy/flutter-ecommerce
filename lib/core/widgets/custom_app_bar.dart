@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_routes.dart';
-import 'package:super_ecommerce/core/constants/app_text_style.dart';
+import 'package:super_ecommerce/core/extensions/context_extensions.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 import 'search_field.dart';
 
@@ -13,9 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.pink.shade600, Colors.pink.shade900])),
+      decoration: BoxDecoration(gradient: context.gradients.primary),
       child: SafeArea(
         child: Column(
           children: [
@@ -24,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 _buildIcon(Icons.shopping_cart_outlined,
                     onPressed: () => Get.toNamed(AppRoute.cartScreen)),
                 Transform.translate(
-                  offset: Offset(15, 0),
+                  offset: const Offset(15, 0),
                   child: IconButton(
                     icon: Transform.scale(
                       scaleY: 1.2,
@@ -35,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     onPressed: () {},
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   child: SizedBox(height: 40, child: SearchField()),
                 ),
                 _buildIcon(Icons.favorite_border,
@@ -46,17 +45,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 textScaler: TextScaler.noScaling,
                 isScrollable: true,
                 tabAlignment: TabAlignment.start,
-                indicatorColor: Colors.white70,
+                indicatorColor: context.colors.onPrimary,
                 indicatorWeight: 4,
                 indicatorSize: TabBarIndicatorSize.tab,
-                indicatorPadding: EdgeInsets.only(bottom: 8),
+                indicatorPadding: const EdgeInsets.only(bottom: 5),
                 dividerHeight: 0,
                 dividerColor: Colors.transparent,
-                unselectedLabelStyle:
-                    AppTextStyle.bold14.copyWith(color: Colors.white),
-                labelStyle: AppTextStyle.bold14.copyWith(color: Colors.white),
+                unselectedLabelStyle: context.appTextTheme.bold14
+                    .copyWith(color: context.colors.onPrimary.withOpacity(.6)),
+                labelStyle: context.appTextTheme.bold14
+                    .copyWith(color: context.colors.onPrimary),
                 controller: tabController,
-                tabs: [
+                tabs: const [
                   Tab(
                     text: "الكل",
                   ),
@@ -90,12 +90,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       icon: Icon(
         icon,
         size: 22,
-        color: Colors.white70,
+        color: context.darken(context.colors.onPrimary, .2),
       ),
       onPressed: onPressed,
     );
   }
 
   @override
-  Size get preferredSize => Size(MediaQuery.of(context).size.width, 115);
+  Size get preferredSize => Size(context.screenWidth, 115);
 }

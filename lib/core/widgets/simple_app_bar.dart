@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class SimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SimpleAppBar({super.key, required this.title});
@@ -10,13 +9,10 @@ class SimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: AppTheme.primaryColor,
+      backgroundColor: context.colors.primary,
       title: Text(
         title,
-        style: const TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w600,
-        ),
+        style: context.appTextTheme.bold23,
       ),
       centerTitle: true,
       leading: IconButton(

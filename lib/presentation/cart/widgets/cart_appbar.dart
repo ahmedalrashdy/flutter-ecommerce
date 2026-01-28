@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:super_ecommerce/core/constants/app_routes.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/presentation/cart/getX/cart_controller.dart';
-
-import '../../../core/constants/app_text_style.dart';
-import '../../../core/theme/app_theme.dart';
 
 class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CartAppBar({super.key});
@@ -12,19 +11,19 @@ class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2,
-      backgroundColor: AppTheme.deepPrimaryColor,
+      backgroundColor: context.colors.primary,
       leading: IconButton(
-        icon: const Icon(
+        icon: Icon(
           Icons.arrow_back_ios,
-          color: Colors.white,
+          color: context.colors.onPrimary,
           size: 20,
         ),
         onPressed: () => Get.back(),
       ),
       title: Text(
         "سلة المشتريات",
-        style: AppTextStyle.bold23.copyWith(
-          color: Colors.white,
+        style: context.appTextTheme.bold23.copyWith(
+          color: context.colors.onPrimary,
           letterSpacing: 0.5,
         ),
       ),
@@ -34,9 +33,9 @@ class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
           alignment: Alignment.center,
           children: [
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.shopping_cart_outlined,
-                color: Colors.white,
+                color: context.colors.onPrimary,
                 size: 24,
               ),
               onPressed: () {},
@@ -57,7 +56,7 @@ class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: GetBuilder<CartController>(builder: (controller) {
                   return Text(
                     "${controller.cartList.length}",
-                    style: AppTextStyle.bold23.copyWith(
+                    style: context.appTextTheme.bold23.copyWith(
                       color: Colors.white,
                       fontSize: 10,
                     ),

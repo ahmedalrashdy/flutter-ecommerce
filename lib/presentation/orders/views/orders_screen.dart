@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:super_ecommerce/core/widgets/tab_content.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
+import 'package:super_ecommerce/core/widgets/basic/tab_content.dart';
 import 'package:super_ecommerce/presentation/orders/getX/orders_controller.dart';
 import 'package:super_ecommerce/presentation/orders/widgets/order_list.dart';
 import '../widgets/filter_bottom_sheet.dart';
@@ -41,7 +42,7 @@ class _OrdersScreenState extends State<OrdersScreen>
         onPressed: () {
           showSortDialog(context);
         },
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: context.colors.primary,
         child: const Icon(Icons.sort),
       ),
     );

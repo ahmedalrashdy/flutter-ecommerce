@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:super_ecommerce/core/constants/app_text_style.dart';
-import 'package:super_ecommerce/core/dialogs/custom_confirm_dialog.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/presentation/favorite/getx/favorite_controller.dart';
 
 class FavoriteAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -14,10 +12,10 @@ class FavoriteAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       elevation: 0,
-      backgroundColor: AppTheme.deepPrimaryColor,
+      backgroundColor: context.darken(context.colors.primary),
       title: Text(
         "المفضلة",
-        style: AppTextStyle.bold23.copyWith(
+        style: context.appTextTheme.bold23.copyWith(
           color: Colors.white,
           letterSpacing: 0.5,
         ),

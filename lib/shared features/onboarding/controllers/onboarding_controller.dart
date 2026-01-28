@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:super_ecommerce/core/constants/app_routes.dart';
-import 'package:super_ecommerce/core/constants/shared_preferences_constants.dart';
+import 'package:super_ecommerce/core/constants/simple_cache_keys.dart';
+import 'package:super_ecommerce/core/services/simple_cache_service.dart';
 import 'package:super_ecommerce/shared%20features/onboarding/models/onboarding_model.dart';
-
 import '../../../core/constants/app_assets.dart';
 
 class OnboardingController extends GetxController {
@@ -22,15 +21,16 @@ class OnboardingController extends GetxController {
   // Get current page color
   Color get currentColor => pageColors[selectedPageIndex.value];
 
-  void setSeenOnboarding() async {
-    final prefs = Get.find<SharedPreferences>();
-    await prefs.setBool(SharedPreferencesConstants.seenOnboarding, true);
+  Future<void> setSeenOnboarding() async {
+    SimpleCacheService simpleCacheService = Get.find<SimpleCacheService>();
+    await simpleCacheService.set(
+        SharedPreferencesConstants.seenOnboarding, true);
   }
 
-  void nextPage() {
+  void nextPage() async {
     if (isLastPage) {
-      setSeenOnboarding();
-      Get.offAllNamed(AppRoute.HomeScreen); // Navigate to home screen
+      await setSeenOnboarding();
+      Get.offAllNamed(AppRoute.mainScreen);
     } else {
       pageController.nextPage(
         duration: const Duration(milliseconds: 300),
@@ -39,9 +39,9 @@ class OnboardingController extends GetxController {
     }
   }
 
-  void skipToHome() {
-    setSeenOnboarding();
-    Get.offAllNamed(AppRoute.HomeScreen);
+  void skipToHome() async {
+    await setSeenOnboarding();
+    Get.offAllNamed(AppRoute.mainScreen);
   }
 
   final List<OnboardingModel> onboardingPages = [

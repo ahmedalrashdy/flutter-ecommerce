@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:super_ecommerce/core/constants/app_routes.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/app_theme_current.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/core/widgets/custom_%20message.dart';
 import 'package:super_ecommerce/core/widgets/request_widget.dart';
+import 'package:super_ecommerce/core/widgets/simple_app_bar.dart';
 import '../../../core/constants/app_assets.dart';
 
 import '../getX/categories_screen_controller.dart';
@@ -16,24 +18,8 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        title: const Text(
-          'Categories',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
-        ),
-        backgroundColor: AppTheme.primaryColor,
-        elevation: 0.5,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Get.back(),
-        ),
-      ),
+      backgroundColor: context.lighten(context.colors.surface),
+      appBar: SimpleAppBar(title: 'Categories'),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: GetBuilder<CategoriesScreenController>(

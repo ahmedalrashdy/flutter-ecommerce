@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_text_style.dart';
 import 'package:super_ecommerce/core/functions/format_price.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/data/models/product_model.dart';
 import 'package:super_ecommerce/presentation/favorite/getx/favorite_controller.dart';
 
@@ -21,7 +21,7 @@ class FavoriteItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(isSmallScreen ? 10 : 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.lighten(context.colors.surface),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -98,7 +98,7 @@ class FavoriteItem extends StatelessWidget {
                     children: [
                       Text(
                         product.name,
-                        style: AppTextStyle.bold23.copyWith(
+                        style: context.appTextTheme.bold23.copyWith(
                           fontSize: isSmallScreen ? 16 : 18,
                           height: 1.2,
                         ),
@@ -108,8 +108,8 @@ class FavoriteItem extends StatelessWidget {
                       SizedBox(height: isSmallScreen ? 6 : 8),
                       Text(
                         product.description ?? "",
-                        style: AppTextStyle.regular16.copyWith(
-                          color: Colors.grey.shade600,
+                        style: context.appTextTheme.regular16.copyWith(
+                          color: context.colors.onSurfaceVariant,
                           fontSize: isSmallScreen ? 12 : 14,
                           height: 1.3,
                         ),
@@ -133,8 +133,9 @@ class FavoriteItem extends StatelessWidget {
                                 children: [
                                   Text(
                                     '\$$newPrice',
-                                    style: AppTextStyle.bold23.copyWith(
-                                      color: AppTheme.deepPrimaryColor,
+                                    style: context.appTextTheme.bold23.copyWith(
+                                      color: context
+                                          .darken(context.colors.primary),
                                       fontSize: isSmallScreen ? 18 : 20,
                                     ),
                                   ),
@@ -142,8 +143,9 @@ class FavoriteItem extends StatelessWidget {
                                   if (product.discount > 0)
                                     Text(
                                       oldPrice,
-                                      style: AppTextStyle.regular14.copyWith(
-                                        color: Colors.grey,
+                                      style: context.appTextTheme.regular14
+                                          .copyWith(
+                                        color: context.colors.onSurfaceVariant,
                                         fontSize: isSmallScreen ? 12 : 14,
                                         decoration: TextDecoration.lineThrough,
                                       ),
@@ -164,8 +166,9 @@ class FavoriteItem extends StatelessWidget {
                                       ),
                                       child: Text(
                                         'خصم $discountRate%',
-                                        style: AppTextStyle.regular13.copyWith(
-                                          color: Colors.green.shade700,
+                                        style: context.appTextTheme.regular13
+                                            .copyWith(
+                                          color: context.colors.secondary,
                                           fontSize: isSmallScreen ? 8 : 12,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -175,13 +178,16 @@ class FavoriteItem extends StatelessWidget {
                                   Icon(
                                     Icons.local_shipping_outlined,
                                     size: isSmallScreen ? 14 : 16,
-                                    color: AppTheme.deepPrimaryColor,
+                                    color:
+                                        context.darken(context.colors.primary),
                                   ),
                                   SizedBox(width: isSmallScreen ? 2 : 4),
                                   Text(
                                     'شحن مجاني',
-                                    style: AppTextStyle.regular13.copyWith(
-                                      color: AppTheme.deepPrimaryColor,
+                                    style:
+                                        context.appTextTheme.regular13.copyWith(
+                                      color: context
+                                          .darken(context.colors.primary),
                                       fontSize: isSmallScreen ? 11 : 13,
                                     ),
                                   ),
@@ -198,7 +204,8 @@ class FavoriteItem extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppTheme.deepPrimaryColor,
+                            backgroundColor:
+                                context.darken(context.colors.primary),
                             foregroundColor: Colors.white,
                             elevation: 0,
                             padding: EdgeInsets.symmetric(
@@ -218,7 +225,7 @@ class FavoriteItem extends StatelessWidget {
                               SizedBox(width: isSmallScreen ? 4 : 6),
                               Text(
                                 'أضف للسلة',
-                                style: AppTextStyle.regular16.copyWith(
+                                style: context.appTextTheme.regular16.copyWith(
                                   color: Colors.white,
                                   fontSize: isSmallScreen ? 12 : 14,
                                 ),

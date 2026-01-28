@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/auth_controller.dart';
+import 'package:super_ecommerce/core/classes/app_validator.dart';
+import 'package:super_ecommerce/core/enums/async_status.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
+import 'package:super_ecommerce/core/widgets/custom_button.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/controllers/reset_password_controller.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/widgets/custom_form_text_field.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/widgets/reset_password_header.dart';
+
+import '../widgets/otp_input.dart';
+import '../widgets/resend_otp_timer.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final String email;
@@ -21,7 +30,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final AuthController _authController = Get.find<AuthController>();
+
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
@@ -35,18 +44,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<AuthController>(
+      body: GetBuilder<ResetPasswordController>(
+        id: "confirmResetPassword",
         builder: (controller) {
           return Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Theme.of(context).primaryColor.withOpacity(0.1),
-                  Colors.white,
-                ],
-              ),
+              gradient: context.gradients.containerGradient,
             ),
             child: SafeArea(
               child: Center(
@@ -57,122 +60,41 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 20,
-                                offset: const Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.lock_reset_rounded,
-                            size: 64,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
+                        const ResetPasswordHeader(
+                            title: 'تعيين كلمة المرور الجديدة',
+                            subTitle: 'الرجاء إدخال كلمة المرور الجديدة'),
                         const SizedBox(height: 32),
-                        Text(
-                          'تعيين كلمة المرور الجديدة',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          'الرجاء إدخال كلمة المرور الجديدة',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        _buildTextField(
+                        CustomFormTextField(
                           controller: _passwordController,
                           icon: Icons.lock_outline,
                           label: 'كلمة المرور الجديدة',
                           obscureText: _obscurePassword,
                           hasPasswordToggle: true,
-                          onTogglePassword: () {
-                            setState(() {
-                              _obscurePassword = !_obscurePassword;
-                            });
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'الرجاء إدخال كلمة المرور';
-                            }
-                            if (value.length < 6) {
-                              return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
-                            }
-                            return null;
-                          },
+                          validator: AppValidator.isValidPassword,
                         ),
                         const SizedBox(height: 16),
-                        _buildTextField(
+                        CustomFormTextField(
                           controller: _confirmPasswordController,
                           icon: Icons.lock_outline,
                           label: 'تأكيد كلمة المرور',
                           obscureText: _obscureConfirmPassword,
                           hasPasswordToggle: true,
-                          onTogglePassword: () {
-                            setState(() {
-                              _obscureConfirmPassword =
-                                  !_obscureConfirmPassword;
-                            });
-                          },
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'الرجاء تأكيد كلمة المرور';
-                            }
-                            if (value != _passwordController.text) {
-                              return 'كلمات المرور غير متطابقة';
-                            }
-                            return null;
+                            return AppValidator.isPasswordMatched(
+                                value, _confirmPasswordController.text);
                           },
                         ),
                         const SizedBox(height: 32),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: controller.isLoading
-                                ? null
-                                : () {
-                                    if (_formKey.currentState!.validate()) {
-                                      _authController.resetPassword(
-                                        widget.email,
-                                        widget.otp,
-                                        _passwordController.text,
-                                      );
-                                    }
-                                  },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              foregroundColor: Colors.white,
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: controller.isLoading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white)
-                                : const Text(
-                                    'تعيين كلمة المرور',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                          ),
+                        CustomButton(
+                          title: "إعاده تعيين كلمة المرور",
+                          isLoading: controller.confirmResetStatus ==
+                              AsyncStatus.loading,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              controller.confirmResetPassword(
+                                  _passwordController.text);
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -182,79 +104,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required IconData icon,
-    required String label,
-    bool obscureText = false,
-    bool hasPasswordToggle = false,
-    VoidCallback? onTogglePassword,
-    String? Function(String?)? validator,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText,
-        validator: validator,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: Icon(icon),
-          suffixIcon: hasPasswordToggle
-              ? IconButton(
-                  icon: Icon(
-                    obscureText ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: onTogglePassword,
-                )
-              : null,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Colors.grey.withOpacity(0.3),
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Colors.grey.withOpacity(0.3),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.error,
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.error,
-            ),
-          ),
-          filled: true,
-          fillColor: Colors.white,
-        ),
       ),
     );
   }

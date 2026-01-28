@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:super_ecommerce/core/extensions/context_extensions.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import 'social_login_divider.dart';
@@ -11,7 +13,7 @@ class LoginSocialSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SocialLoginDivider(),
+        SocialLoginDivider(text: context.tr.social_divider),
         const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +31,7 @@ class LoginSocialSection extends StatelessWidget {
               icon: AppAssets.imagesFacebook,
               text: 'Facebook',
               backgroundColor: Colors.white,
-              textColor: Colors.white,
+              textColor: Colors.black87,
             ),
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_routes.dart';
@@ -41,15 +42,17 @@ class RegisterController extends GetxController
   Future<void> register() async {
     if (formKey.currentState!.validate()) {
       validationErrors.clear();
-      await handleCustomResultAsync<String>(
+      await handleCustomResultAsync<Unit>(
           setStatus: (s) => status = s,
           task: () => authRepository.register(
-              emailController.text,
-              nameController.text,
-              passwordController.text,
-              passwordConfirmationController.text),
-          onSuccess: (otpToken) {
-            Get.toNamed(AppRoute.verifyOtpScreen);
+                emailController.text,
+                nameController.text,
+                passwordController.text,
+              ),
+          onSuccess: (_) {
+            Get.toNamed(AppRoute.verifyOtpScreen, arguments: {
+              "email": emailController.text,
+            });
           },
           onError: (failure) {
             if (failure is ValidationFailure) {

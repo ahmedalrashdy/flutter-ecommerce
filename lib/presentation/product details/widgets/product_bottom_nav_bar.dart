@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_routes.dart';
 import 'package:super_ecommerce/core/controllers/product_card_controller.dart';
 import 'package:super_ecommerce/core/enums/async_status.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/data/models/product_model.dart';
 import 'package:super_ecommerce/presentation/product%20details/getX/product_detail_controller.dart';
 
@@ -41,7 +41,6 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     ProductDetailsController controller =
         Get.find(tag: "product_${widget.productId}");
     final totalPrice = (controller.productDetail!.product.price -
@@ -55,7 +54,7 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             decoration: BoxDecoration(
-              color: AppTheme.cardColor,
+              color: context.colorScheme.surfaceBright,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(24),
                 topRight: Radius.circular(24),
@@ -81,16 +80,16 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
                           children: [
                             Text(
                               'الإجمالي',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: theme.textTheme.bodySmall?.color
+                              style: context.textTheme.bodyMedium?.copyWith(
+                                color: context.textTheme.bodySmall?.color
                                     ?.withOpacity(0.7),
                               ),
                             ),
                             const SizedBox(height: 4),
                             Text(
                               '${totalPrice.toStringAsFixed(2)} ريال',
-                              style: theme.textTheme.titleLarge?.copyWith(
-                                color: theme.primaryColor,
+                              style: context.textTheme.titleLarge?.copyWith(
+                                color: context.colors.onPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -103,7 +102,7 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            color: AppTheme.primaryColor.withOpacity(0.1),
+                            color: context.colors.primary.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Row(
@@ -117,8 +116,9 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       color: quantity > 1
-                                          ? theme.primaryColor
-                                          : theme.primaryColor.withOpacity(0.3),
+                                          ? context.colors.primary
+                                          : context.colors.primary
+                                              .withOpacity(0.3),
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
@@ -137,9 +137,10 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
                                     const EdgeInsets.symmetric(horizontal: 12),
                                 child: Text(
                                   quantity.toString(),
-                                  style: theme.textTheme.titleMedium?.copyWith(
+                                  style:
+                                      context.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: theme.primaryColor,
+                                    color: context.colors.primary,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -152,7 +153,7 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
                                   child: Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: theme.primaryColor,
+                                      color: context.colors.primary,
                                       shape: BoxShape.circle,
                                     ),
                                     child: const Icon(
@@ -175,7 +176,7 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
                       // Add to Favorites Button
                       Container(
                         decoration: BoxDecoration(
-                          color: theme.primaryColor.withOpacity(0.1),
+                          color: context.colors.primary.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: IconButton(
@@ -188,7 +189,7 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
                               controller.productDetail!.product.isFavorite
                                   ? Icons.favorite
                                   : Icons.favorite_border),
-                          color: theme.primaryColor,
+                          color: context.colors.primary,
                           style: IconButton.styleFrom(
                             padding: const EdgeInsets.all(12),
                             shape: RoundedRectangleBorder(
@@ -212,7 +213,7 @@ class _ProductBottomNavBarState extends State<ProductBottomNavBar> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: theme.primaryColor,
+                            backgroundColor: context.colors.primary,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(

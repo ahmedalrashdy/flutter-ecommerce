@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -16,9 +15,9 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.white,
-      selectedItemColor: AppTheme.primaryColor,
-      unselectedItemColor: AppTheme.seconderTextColor,
+      backgroundColor: context.colors.primary,
+      selectedItemColor: context.colors.onPrimary,
+      unselectedItemColor: context.colors.onPrimary.withOpacity(.6),
       currentIndex: currentIndex,
       onTap: onTap,
       items: const [

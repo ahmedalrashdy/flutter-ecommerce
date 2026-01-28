@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:super_ecommerce/core/constants/app_routes.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/middlewares/register_verify_otp_middleware.dart';
 import 'package:super_ecommerce/presentation/addresses/views/address_adding_screen.dart';
 import 'package:super_ecommerce/presentation/addresses/views/address_screen.dart';
 import 'package:super_ecommerce/presentation/cart/cart_screen.dart';
@@ -42,9 +43,9 @@ final routes = [
     page: () => const FavoriteScreen(),
   ),
   GetPage(
-    name: AppRoute.loginScreen,
-    page: () => const LoginScreen(),
-  ),
+      name: AppRoute.loginScreen,
+      page: () => const LoginScreen(),
+      middlewares: [RegisterVerifyOtpMiddleware()]),
   GetPage(
     name: AppRoute.registerScreen,
     page: () => const RegisterScreen(),
@@ -55,7 +56,7 @@ final routes = [
   ),
   GetPage(
     name: AppRoute.verifyOtpScreen,
-    page: () => const VerifyOtpScreen(),
+    page: () => VerifyOtpScreen(),
   ),
   GetPage(
     name: AppRoute.resetPassword,

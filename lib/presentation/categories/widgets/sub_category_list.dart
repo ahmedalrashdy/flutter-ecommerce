@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 import '../../../core/constants/app_assets.dart';
-import '../../../core/constants/app_routes.dart';
-import '../../../core/constants/app_text_style.dart';
+
 import '../../../core/widgets/category_list.dart';
 import '../../../core/widgets/request_widget.dart';
 import '../getX/sub_category_controller.dart';
@@ -41,7 +41,7 @@ class SubCategoryList extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           child: Text(
                             "الفئات",
-                            style: AppTextStyle.bold16,
+                            style: context.appTextTheme.bold16,
                           ),
                         ),
                         const SizedBox(height: 12),

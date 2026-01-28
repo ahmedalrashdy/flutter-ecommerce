@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import '../../../../core/constants/app_assets.dart';
 
 class CustomLogo extends StatelessWidget {
@@ -15,7 +16,7 @@ class CustomLogo extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).primaryColor.withOpacity(0.2),
+              color: context.colors.primary.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 20,
               offset: const Offset(0, 3),

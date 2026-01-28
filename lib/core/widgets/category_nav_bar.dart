@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:super_ecommerce/core/constants/app_text_style.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/app_theme_current.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class CategoryNavBar extends StatefulWidget {
   CategoryNavBar({super.key, required this.tabController});
@@ -16,14 +17,8 @@ class _CategoryNavBarState extends State<CategoryNavBar> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: context.colorScheme.secondary,
+        boxShadow: [context.shadows.medium],
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -64,18 +59,22 @@ class _CategoryNavBarState extends State<CategoryNavBar> {
           selectedIndex = index;
         });
       },
-      icon: Icon(icon, size: 18),
+      icon: Icon(
+        icon,
+        size: 20,
+        color: context.colors.onPrimary,
+      ),
       label: Text(name,
-          style: AppTextStyle.bold12.copyWith(
-              color: isActive ? Colors.white : AppTheme.primaryTextColor)),
+          style: context.appTextTheme.bold12
+              .copyWith(color: context.colors.onPrimary)),
       style: ButtonStyle(
         foregroundColor: WidgetStateProperty.resolveWith<Color>(
           (Set<WidgetState> states) =>
-              isActive ? Colors.white : AppTheme.primaryTextColor,
+              isActive ? context.colors.secondary : context.colors.onPrimary,
         ),
         backgroundColor: WidgetStateProperty.resolveWith<Color>(
           (Set<WidgetState> states) =>
-              isActive ? AppTheme.primaryColor : Colors.white,
+              isActive ? context.colors.primary : context.colors.secondary,
         ),
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

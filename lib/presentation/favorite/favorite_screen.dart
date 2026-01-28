@@ -11,7 +11,6 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(FavoriteController());
     return Scaffold(
-        backgroundColor: Colors.grey.shade50,
         appBar: FavoriteAppBar(),
         body: GetBuilder<FavoriteController>(builder: (controller) {
           return ListView.separated(

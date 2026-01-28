@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:super_ecommerce/shared%20features/auth/data/auth_controller.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/controllers/auth_controller.dart';
 import 'package:super_ecommerce/core/widgets/custom_button.dart';
 
 class ProfileAppBar extends StatelessWidget {
@@ -25,8 +26,8 @@ class ProfileAppBar extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor.withOpacity(0.8),
+              context.colors.primary,
+              context.colors.primary.withOpacity(0.8),
             ],
           ),
         ),

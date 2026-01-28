@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class SocialLoginDivider extends StatelessWidget {
   final String text;
@@ -14,7 +15,7 @@ class SocialLoginDivider extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             text,
-            style: TextStyle(color: Colors.grey[600], fontSize: 14),
+            style: TextStyle(color: context.colors.onSurface, fontSize: 14),
           ),
         ),
         Expanded(child: Divider(color: Colors.grey[300], thickness: 1)),

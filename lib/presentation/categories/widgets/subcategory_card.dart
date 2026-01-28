@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class SubcategoryCard extends StatelessWidget {
   final String name;
@@ -50,7 +51,7 @@ class SubcategoryCard extends StatelessWidget {
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor,
+                          context.colors.primary,
                         ),
                       ),
                     ),
@@ -86,7 +87,7 @@ class SubcategoryCard extends StatelessWidget {
                     'View All',
                     style: TextStyle(
                       fontSize: 10,
-                      color: Theme.of(context).primaryColor,
+                      color: context.colors.primary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

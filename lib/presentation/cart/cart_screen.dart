@@ -3,7 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:super_ecommerce/shared%20features/auth/data/auth_controller.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
+import 'package:super_ecommerce/shared%20features/auth/presentation/controllers/auth_controller.dart';
 import 'package:super_ecommerce/core/enums/async_status.dart';
 import 'package:super_ecommerce/core/widgets/custom_%20message.dart';
 import 'package:super_ecommerce/presentation/cart/getX/cart_controller.dart';
@@ -20,7 +21,6 @@ class CartScreen extends StatelessWidget {
     CartController controller = Get.put(CartController());
     final auth = Get.find<AuthController>();
     return Scaffold(
-        backgroundColor: Colors.grey.shade50,
         appBar: const CartAppBar(),
         bottomNavigationBar: GetBuilder<CartController>(builder: (controller) {
           if (controller.cartList.isEmpty) return const SizedBox.shrink();

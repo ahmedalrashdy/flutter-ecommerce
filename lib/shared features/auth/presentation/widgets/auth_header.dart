@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class AuthHeader extends StatelessWidget {
   final String title;
@@ -27,7 +28,7 @@ class AuthHeader extends StatelessWidget {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context).primaryColor.withOpacity(0.2),
+                  color: context.colors.primary.withOpacity(0.2),
                   spreadRadius: 5,
                   blurRadius: 20,
                   offset: const Offset(0, 3),
@@ -44,24 +45,24 @@ class AuthHeader extends StatelessWidget {
         ShaderMask(
           shaderCallback: (bounds) => LinearGradient(
             colors: [
-              Theme.of(context).primaryColor,
-              Colors.blue,
+              context.colors.primary,
+              context.colors.secondary,
             ],
           ).createShader(bounds),
           child: Text(
             title,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+            style: context.textStyleTheme.headlineMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ),
         const SizedBox(height: 8),
         Text(
           description,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.grey[600],
-              ),
+          style: context.textStyleTheme.bodyLarge?.copyWith(
+            color: context.colors.onSurface,
+          ),
         ),
       ],
     );

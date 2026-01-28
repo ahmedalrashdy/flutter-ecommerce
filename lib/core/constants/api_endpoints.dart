@@ -25,6 +25,14 @@ abstract class ApiEndpoint {
   //Auth
   static const String login = "auth/login/";
   static const String register = "auth/register/";
+  static const String verifyEmail = "auth/verify-email/";
+  static const String verifyResetPasswordOTP =
+      "auth/verify-reset-password-otp/";
+  static const String resendOTP = "auth/resend-otp/";
+  static const String resetPassword = "auth/reset-password/";
+  static const String changePassword = "auth/change-password/";
+  static const String logout = "auth/logout/";
+  static const String confirmResetPassword = "auth/confirm-reset-password/";
 
   //Cart
   static const String cartList = "cart";

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class CustomMessage extends StatelessWidget {
   const CustomMessage({super.key, required this.icon, required this.title});
@@ -9,11 +10,12 @@ class CustomMessage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, size: 80, color: Colors.grey),
+        Icon(icon, size: 80, color: context.colors.onSurface),
         const SizedBox(height: 20),
         Text(
           title,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: context.appTextTheme.bold18
+              .copyWith(color: context.colors.onSurface),
           textAlign: TextAlign.center,
         ),
       ],

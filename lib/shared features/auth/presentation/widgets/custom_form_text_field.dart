@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:super_ecommerce/core/constants/app_text_style.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class CustomFormTextField extends StatelessWidget {
   CustomFormTextField(
@@ -51,7 +52,8 @@ class CustomFormTextField extends StatelessWidget {
                     errorMessage!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.regular11.copyWith(color: Colors.red),
+                    style: context.appTextTheme.regular11
+                        .copyWith(color: Colors.red),
                   )
                 : null,
             labelText: label,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:super_ecommerce/core/extensions/context_extensions.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 import '../screens/forgot_password_screen.dart';
 
@@ -17,9 +19,9 @@ class ForgotPassword extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
       ),
       child: Text(
-        'نسيت كلمة المرور؟',
+        context.tr.auth_forgotPasswordTitle,
         style: TextStyle(
-          color: Theme.of(context).primaryColor,
+          color: context.darken(context.colors.secondary),
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),

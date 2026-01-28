@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:super_ecommerce/core/constants/app_text_style.dart';
 import 'package:super_ecommerce/core/enums/async_status.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import 'package:super_ecommerce/core/widgets/custom_button.dart';
+import 'package:super_ecommerce/core/widgets/simple_app_bar.dart';
 import 'package:super_ecommerce/presentation/addresses/getX/address_adding_controller.dart';
 import 'package:super_ecommerce/shared%20features/auth/presentation/widgets/custom_form_text_field.dart';
 
@@ -17,29 +17,20 @@ class AddressAddingScreen extends StatefulWidget {
 }
 
 class _AddressAddingScreenState extends State<AddressAddingScreen> {
-  bool _isMapTouched = false; // تعطيل التمرير أثناء لمس الخريطة
-  final ScrollController _scrollController = ScrollController();
-
   @override
   Widget build(BuildContext context) {
     final AddressAddingController controllerPage =
         Get.put(AddressAddingController());
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppTheme.primaryColor,
-        title: Text(
-          "إضافة عنوان جديد",
-          style: AppTextStyle.bold18.copyWith(color: Colors.white),
-        ),
-      ),
+      appBar: const SimpleAppBar(title: "إضافة عنوان جديد"),
       body: ListView(
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           _line(title: "حدد موقعك على الخريطة", icon: Icons.location_on),
           Container(
             height: 400,
-            child: AbsorbPointer(
+            child: const AbsorbPointer(
               absorbing: false,
               child: MapWidget(),
             ),
@@ -73,7 +64,7 @@ class _AddressAddingScreenState extends State<AddressAddingScreen> {
                       onChanged: controllerPage.switchDefault,
                       title: Text(
                         "العنوان الافتراضي",
-                        style: AppTextStyle.regular16,
+                        style: context.appTextTheme.regular16,
                       ),
                     );
                   }),
@@ -107,9 +98,9 @@ class _AddressAddingScreenState extends State<AddressAddingScreen> {
           const SizedBox(height: 15),
           Row(
             children: [
-              if (icon != null) Icon(icon, color: AppTheme.primaryColor),
+              if (icon != null) Icon(icon, color: context.colors.primary),
               const SizedBox(width: 5),
-              Text(title, style: AppTextStyle.bold16),
+              Text(title, style: context.appTextTheme.bold16),
             ],
           ),
           const SizedBox(height: 15),

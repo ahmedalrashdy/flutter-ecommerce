@@ -5,7 +5,7 @@ abstract class AppValidator {
     if (value == null || value.isEmpty) {
       return 'يرجى إدخال البريد الإلكتروني';
     }
-    if (!GetUtils.isEmail(value)) {
+    if (!GetUtils.isEmail(value.trim())) {
       return 'يرجى إدخال بريد إلكتروني صحيح';
     }
     return null;

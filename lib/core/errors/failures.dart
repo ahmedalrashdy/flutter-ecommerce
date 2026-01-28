@@ -24,7 +24,12 @@ class CacheFailure extends Failure {
 
 class ValidationFailure extends Failure {
   final Map<String, dynamic> messages;
-  const ValidationFailure({required this.messages}) : super(message: "");
+  const ValidationFailure({required this.messages, super.message = ""});
+}
+
+class TooManyRequestFailure extends Failure {
+  final Map<String, dynamic> messages;
+  const TooManyRequestFailure({required this.messages}) : super(message: "");
 }
 
 class AuthFailure extends Failure {

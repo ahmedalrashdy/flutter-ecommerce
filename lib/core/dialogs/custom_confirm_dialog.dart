@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../constants/app_text_style.dart';
-import '../theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 class CustomConfirmationDialog extends StatelessWidget {
   final String title;
@@ -62,7 +61,7 @@ class CustomConfirmationDialog extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isDestructive
                     ? Colors.red.shade50
-                    : AppTheme.deepPrimaryColor.withOpacity(0.1),
+                    : context.darken(context.colors.primary).withOpacity(0.1),
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(24),
                 ),
@@ -74,7 +73,9 @@ class CustomConfirmationDialog extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: isDestructive
                           ? Colors.red.shade100
-                          : AppTheme.deepPrimaryColor.withOpacity(0.2),
+                          : context
+                              .darken(context.colors.primary)
+                              .withOpacity(0.2),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -84,7 +85,7 @@ class CustomConfirmationDialog extends StatelessWidget {
                               : Icons.info_rounded),
                       color: isDestructive
                           ? Colors.red.shade400
-                          : AppTheme.deepPrimaryColor,
+                          : context.darken(context.colors.primary),
                       size: isSmallScreen ? 24 : 28,
                     ),
                   ),
@@ -92,11 +93,11 @@ class CustomConfirmationDialog extends StatelessWidget {
                   Expanded(
                     child: Text(
                       title,
-                      style: AppTextStyle.bold23.copyWith(
+                      style: context.appTextTheme.bold23.copyWith(
                         fontSize: isSmallScreen ? 18 : 20,
                         color: isDestructive
                             ? Colors.red.shade400
-                            : AppTheme.deepPrimaryColor,
+                            : context.darken(context.colors.primary),
                       ),
                     ),
                   ),
@@ -108,7 +109,7 @@ class CustomConfirmationDialog extends StatelessWidget {
               padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
               child: Text(
                 content,
-                style: AppTextStyle.regular16.copyWith(
+                style: context.appTextTheme.regular16.copyWith(
                   fontSize: isSmallScreen ? 14 : 16,
                   height: 1.5,
                   color: Colors.grey.shade700,
@@ -144,7 +145,7 @@ class CustomConfirmationDialog extends StatelessWidget {
                     ),
                     child: Text(
                       cancelText ?? "إلغاء",
-                      style: AppTextStyle.regular16.copyWith(
+                      style: context.appTextTheme.regular16.copyWith(
                         color: Colors.grey.shade600,
                         fontSize: isSmallScreen ? 14 : 16,
                       ),
@@ -161,7 +162,7 @@ class CustomConfirmationDialog extends StatelessWidget {
                       backgroundColor: confirmColor ??
                           (isDestructive
                               ? Colors.red.shade400
-                              : AppTheme.deepPrimaryColor),
+                              : context.darken(context.colors.primary)),
                       foregroundColor: Colors.white,
                       elevation: 0,
                       padding: EdgeInsets.symmetric(
@@ -174,7 +175,7 @@ class CustomConfirmationDialog extends StatelessWidget {
                     ),
                     child: Text(
                       confirmText ?? (isDestructive ? "مسح" : "تأكيد"),
-                      style: AppTextStyle.bold23.copyWith(
+                      style: context.appTextTheme.bold23.copyWith(
                         color: Colors.white,
                         fontSize: isSmallScreen ? 14 : 16,
                       ),

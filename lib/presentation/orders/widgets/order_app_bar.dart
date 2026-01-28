@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:super_ecommerce/core/theme/app_theme.dart';
+import 'package:super_ecommerce/core/theme/app_theme_current.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 
 import 'order_summary.dart';
 
@@ -33,7 +34,7 @@ class _OrderAppBarState extends State<OrderAppBar>
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: AppTheme.primaryColor,
+      backgroundColor: context.colors.primary,
       title: _showSearch
           ? TextField(
               controller: _searchController,
@@ -91,7 +92,7 @@ class _OrderAppBarState extends State<OrderAppBar>
                     _selectedFilter == filter
                         ? Icons.radio_button_checked
                         : Icons.radio_button_unchecked,
-                    color: Theme.of(context).primaryColor,
+                    color: context.colors.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 8),

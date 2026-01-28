@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:super_ecommerce/core/theme/extensions/theme_extensions.dart';
 import '../controllers/onboarding_controller.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -94,7 +95,7 @@ class OnboardingScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: _controller.selectedPageIndex.value ==
                                           index
-                                      ? Theme.of(context).primaryColor
+                                      ? context.colors.primary
                                       : Colors.grey[300],
                                   borderRadius: BorderRadius.circular(5),
                                 ),
@@ -107,7 +108,7 @@ class OnboardingScreen extends StatelessWidget {
                           () => ElevatedButton(
                             onPressed: _controller.nextPage,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context).primaryColor,
+                              backgroundColor: context.colors.primary,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 32,
                                 vertical: 16,
